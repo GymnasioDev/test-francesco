@@ -1,0 +1,213 @@
+service: postura-test
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-south-1
+  environment:
+    DYNAMODB_COMPANIES_TABLE: ${self:custom.companiesTableName}
+    DYNAMODB_TASKS_TABLE: ${self:custom.tasksTableName}
+
+
+  
+custom:
+  companiesTableName: companies-${self:provider.stage}
+  tasksTableName: tasks-${self:provider.stage}
+  serverless-dynamodb:
+    # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+      convertEmptyValues: true
+  serverless-offline:
+    resourceRoutes: true
+    httpPort: 3001
+    lambdaPort: 3002
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-dynamodb
+  - serverless-offline
+
+functions:
+  getCompany:
+    handler: companies.getCompany
+    name: get-company
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: companies/{company}
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: !GetAtt CompaniesTable.Arn
+
+  createCompany:
+    handler: companies.createCompany
+    name: create-company
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: companies
+          method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt CompaniesTable.Arn
+        
+  updateCompany:
+    handler: companies.updateCompany
+    name: update-company
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: companies/{companyId}
+          method: PUT
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt CompaniesTable.Arn
+
+  deleteCompany:
+    handler: companies.deleteCompany
+    name: delete-company
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: companies/{company}
+          method: DELETE
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: !GetAtt CompaniesTable.Arn
+
+  getAllCompanies:
+    handler: companies.getAllCompanies
+    name: get-all-companies
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: companies
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt CompaniesTable.Arn
+
+  getTask:
+    handler: tasks.getPost
+    name: get-task
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: tasks/{task}
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: !GetAtt TasksTable.Arn
+
+  createTask:
+    handler: tasks.createTask
+    name: create-task
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: tasks
+          method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt TasksTable.Arn
+        
+  updateTask:
+    handler: tasks.updateTask
+    name: update-task
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: tasks/{task}
+          method: PUT
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt TasksTable.Arn
+
+  deleteTask:
+    handler: tasks.deleteTask
+    name: delete-task
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: tasks/{task}
+          method: DELETE
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: !GetAtt TasksTable.Arn
+
+  getAllTasks:
+    handler: tasks.getAllTasks
+    name: get-all-tasks
+    memorySize: 128 # mb
+    timeout: 5 # seconds
+    events:
+      - http:
+          path: tasks
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt TasksTable.Arn
+
+resources:
+  Resources:
+    CompaniesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.companiesTableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    TasksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tasksTableName}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

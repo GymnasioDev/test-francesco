@@ -1,0 +1,73 @@
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+}
+
+.card-date {
+  font-size: 14px;
+  color: #666;
+}
+
+.card-tags {
+  display: flex;
+  gap: 8px;
+}
+
+/* Badge */
+.tag {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Badge attivi */
+.tag.ocra.active {
+  background-color: #f39c12;
+  color: white;
+}
+
+.tag.niosh.active {
+  background-color: #3498db;
+  color: white;
+}
+
+/* Badge disabilitati */
+.tag.disabled {
+  background-color: #ddd;
+  color: #888;
+  opacity: 0.6;
+  cursor: not-allowed;
+}

@@ -1,0 +1,29 @@
+
+  .expandable-section {
+    margin-top: 20px;
+  }
+  
+  .expand-button {
+    width: 100%;
+    text-align: left;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .expand-button:hover {
+    background: #0056b3;
+  }
+  
+  .section-content {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+    background: #f9f9f9;
+  }
+  

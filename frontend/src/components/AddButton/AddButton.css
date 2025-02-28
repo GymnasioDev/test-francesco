@@ -1,0 +1,14 @@
+.add-task-button {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.add-task-button:hover {
+  background-color: #16a085;
+}

@@ -1,0 +1,98 @@
+/* Overlay scuro del modale */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Finestra del modale */
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  width: 350px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Titolo del modale */
+.modal-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
+}
+
+/* Input e toggle */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: black;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+}
+
+/* Toggle group */
+.toggle-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.toggle-label {
+  font-size: 14px;
+  color: black;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Pulsanti */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-button {
+  background-color: #1abc9c;
+  color: black;
+  border: 1px solid black;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-button:hover {
+  background-color: #16a085;
+}
+
+.cancel-button {
+  background-color: #e74c3c;
+  color: black;
+  border: 1px solid black;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #c0392b;
+}
